@@ -1,0 +1,56 @@
+wget -nv http://public-repo-1.hortonworks.com/ambari/centos6/2.x/updates/2.1.0/ambari.repo -O /etc/yum.repos.d/ambari.repo
+
+
+[root@localhost ~]# alternatives --install /usr/bin/java java /usr/java/jdkxx/bin/java 100
+
+切換預設的 Java
+
+[root@localhost ~]# alternatives --config java
+alternatives --config java
+alternatives --config javac
+
+
+ root#vi /etc/security/limits.conf
+
+*                hard    nofile          350000
+*                soft    nofile          350000
+*                hard    nproc           131072
+*                soft    nproc           131072
+*                hard    stack           10240
+*                soft    stack           10240
+
+
+#*          soft    nproc     1024
+root       soft    nproc     unlimited
+
+* soft nproc 131072
+* hard nproc 131072 
+
+
+admin host: 
+ssh-keygen
+scp .ssh/id_rsa.pub root@IP:.ssh/
+
+clusthost:
+cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+
+
+ vi /etc/profile 
+ append th following line
+ umask 022
+ 
+
+if test -f /sys/kernel/mm/transparent_hugepage/enabled; then
+   echo never > /sys/kernel/mm/transparent_hugepage/enabled
+fi
+if test -f /sys/kernel/mm/transparent_hugepage/defrag; then
+   echo never > /sys/kernel/mm/transparent_hugepage/defrag
+fi
+
+yum install httpd -y 
+
+yum install yum-utils createrepo -y
+mkdir -p /var/www/html/
+
+
+yum install ambari-server
